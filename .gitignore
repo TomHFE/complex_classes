@@ -1,0 +1,6 @@
+pair_complex_venv/
+
+# Other common ignores
+*.pyc
+__pycache__/
+.DS_Store
