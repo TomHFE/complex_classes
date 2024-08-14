@@ -59,4 +59,19 @@ def test_birthdays_coming_up():
     birthday_object = BirthdayObject('name', '1987-08-17')
 
     birthday_manager.add_to_record(birthday_object) 
-    assert birthday_manager.birthday_coming_up() == [{'name', ''}]
+    assert birthday_manager.birthday_coming_up() == [{'birthday': '1987-08-17','name': 'name'}]
+
+
+
+'''
+As a user
+So I can buy age-appropriate birthday cards
+I want to calculate the upcoming ages for friends with birthdays
+'''
+
+def test_age_if_born_1970():
+    birthday_manager = BirthdayManager()
+    birthday_object = BirthdayObject('name', '1970-08-17')
+
+    birthday_manager.add_to_record(birthday_object) 
+    assert birthday_manager.birthday_age() == [{'name': 'name', 'age': 54}]

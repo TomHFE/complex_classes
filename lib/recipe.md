@@ -73,6 +73,23 @@ class BirthdayManager:
             if record.name == name:
                 name = new_name
 
+    def birthday_coming_up(self):
+        curr_date = date.datetime.today()
+        birthday_comping_up = []
+        for record in self.records:     
+            if record.date < curr_date.days + 11 and not record.date < curr_date.days:
+                birthdays_coming_up.append(record)
+        return birthdays_coming_up
+
+    def calculate_age(self, name):
+        upcoming_birthdays = birthday_coming_up()
+        curr_date = date.datetime.today()
+        age_appropriate_dict = {}
+        for birthday in upcoming_birthdays:
+            age = curr_date - birthday.birthdate
+            age_appropriate_dict[name] = age
+        return age_appropriate_dict
+
 
 
 class BirthdayObject:
@@ -129,13 +146,33 @@ birthday_manager.update_birthday('name', 'new_date')
 
 
 """
-Given a name and an empty task
-#remind still reminds the user to do the task, even though it looks odd
+update name of a birthday object given a name
+
 """
-reminder = Reminder("Kay")
-reminder.remind_me_to("")
-reminder.remind() # => ", Kay!"
-```
+
+birthday_manager = BirthdayManager()
+birthday_object = BirthdayObject('name', 'birthdate')
+
+birthday_manager.add_to_record(birthday_object) 
+birthday_manager.update_name('name', 'new_name')
+
+=> birthday_manager.access info of 'name' == 'new_name'
+
+
+"""
+find birthdays coming up
+
+"""
+
+birthday_manager = BirthdayManager()
+birthday_object = BirthdayObject('name', 'birthdate')
+
+birthday_manager.add_to_record(birthday_object) 
+birthday_manager.birthday_coming_up()
+=> access birthdays and return birthdays which are within the next 10 days
+# => birthday_manager.access info of 'name' == 'new_name'
+assert birthday_manager.birthday_coming_up() == birthday_object('name', 'birthdate')
+
 
 _Encode each example as a test. You can add to the above list as you go._
 

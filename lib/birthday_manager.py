@@ -35,13 +35,31 @@ class BirthdayManager:
         curr_date = curr_date + timedelta(days = 0)
         curr_date_plus_11 = curr_date + timedelta(days = 11)
 
+        # (date_before_1970 - epoch).total_seconds()
+
         print(f'curr date  == {curr_date}')
 
         birthdays_coming_up = []
         for record in self.records:     
-            formatted_date = datetime.strptime(record.birthdate, '%Y-%m-%d').date()
-            print(f'record date  == {formatted_date}')
-            if formatted_date < curr_date_plus_11:
+            birthday = datetime.strptime(record.birthdate, '%Y-%m-%d').date()
+            birthday_if_curr_year = datetime.strptime(record.birthdate, '%Y-%m-%d').date().replace(year = curr_date.year)
+            print(f'record date  == {birthday}')
+            if birthday < curr_date_plus_11 and curr_date < birthday_if_curr_year:
                     print('true')
-                    birthdays_coming_up.append(record)
+                    birthdays_coming_up.append({'name': record.name, 'birthday': record.birthdate})
         return birthdays_coming_up
+    
+    def birthday_age(self):
+        birthday_list = self.birthday_coming_up()
+        curr_date = datetime.today().date()
+        birthday_ages = []
+        for record in birthday_list:
+            birthday = datetime.strptime(record['birthday'], '%Y-%m-%d').date()
+            birthday_if_curr_year = datetime.strptime(record['birthday'], '%Y-%m-%d').date().replace(year = curr_date.year)
+            curr_age = int((birthday_if_curr_year - birthday).days / 365.25)
+            birthday_ages.append({'name': record['name'] , "age": curr_age})
+            print(birthday_ages)
+        return birthday_ages
+            
+
+    # today 1 2 3 4 5 6 7 8 9 10 
